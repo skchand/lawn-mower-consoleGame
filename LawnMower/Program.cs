@@ -11,15 +11,9 @@ namespace LawnMower
         static void Main(string[] args)
         {
             MowerInput mi = new MowerInput();
-            //string[] coordinates1;
+
             string gridSize = Console.ReadLine();
-            //Console.WriteLine("Grid Size " + gridSize);
-            //string[] coordinates = gridSize.Split(' ');
-            //int x, y;
-            //Int32.TryParse(coordinates[0], out x);
-            //Int32.TryParse(coordinates[1], out y);
-            //Console.WriteLine("x-axis " + x);
-            //Console.WriteLine("y-axis " + y);
+          
 
             List<string> moverinput = new List<string>();
 
@@ -43,12 +37,12 @@ namespace LawnMower
                 }
                 //allParsedInputs
 
-                foreach (var parsedInput in allParsedInputs)
-                {
-                    Console.WriteLine($"GridCoordinates:({parsedInput.GridX}, {parsedInput.GridY}) Coordinates:({parsedInput.X}, {parsedInput.Y}) Direction: {parsedInput.Direction} Commands: {parsedInput.Commands[0]} {parsedInput.Commands[1]} {parsedInput.Commands[2]} {parsedInput.Commands[3]}");
+                //foreach (var parsedInput in allParsedInputs)
+                //{
+                //    Console.WriteLine($"GridCoordinates:({parsedInput.GridX}, {parsedInput.GridY}) Coordinates:({parsedInput.X}, {parsedInput.Y}) Direction: {parsedInput.Direction} Commands: {parsedInput.Commands[0]} {parsedInput.Commands[1]} {parsedInput.Commands[2]} {parsedInput.Commands[3]}");
 
-                }
-                Console.ReadLine();
+                //}
+                //Console.ReadLine();
             }
         }
     }
