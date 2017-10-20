@@ -1,0 +1,9 @@
+﻿10 10
+4 5 W
+BLRLR
+6 7 S
+RLML
+7 8 E
+LRMM
+9 6 N
+RRLL
