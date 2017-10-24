@@ -18,7 +18,6 @@ namespace LawnMower
                 //Pass the file path and file name to the StreamReader constructor
                 StreamReader sr = new StreamReader("C:\\Files\\Chandra.txt");
                 string gridSize = sr.ReadLine();
-                
                 string input = sr.ReadLine();
 
                 while (!string.IsNullOrEmpty(input))
@@ -44,14 +43,14 @@ namespace LawnMower
                     }
                     Console.ReadLine();
                 }
+                else { throw new ArgumentException("No input line detected"); }
                 //close the file
                 sr.Close();
-                
+
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.Message);
-                Console.ReadLine();
             }
             finally
             {

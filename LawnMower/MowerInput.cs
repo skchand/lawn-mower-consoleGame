@@ -25,45 +25,49 @@ namespace LawnMower
             MowerInput moverInput = new MowerInput();
             int temp;
             string[] gridcoordinates = gridSize.Split(' ');
-          
-            if (int.TryParse(gridcoordinates[0], out temp))
-            {
-                moverInput.GridX = temp;
-            }
+            
 
-            if (int.TryParse(gridcoordinates[1], out temp))
-            {
-                moverInput.GridY = temp;
-            }
-          
-            string[] data = gridDimensionsAndStartingDirection.Split(' ');
-            if (int.TryParse(data[0], out temp))
-            {
-                moverInput.X = temp;
-            }
+                    if (int.TryParse(gridcoordinates[0], out temp))
+                    {
+                        moverInput.GridX = temp;
+                    }
+                    else { throw new ArgumentException("Not an integer"); }
 
-            if (int.TryParse(data[1], out temp))
-            {
-                moverInput.Y = temp;
-            }
+                    if (int.TryParse(gridcoordinates[1], out temp))
+                    {
+                        moverInput.GridY = temp;
+                    }
+                    else { throw new ArgumentException("Not an integer"); }
 
-            string cdirection = data[2];
-            char cc;
-            cc = cdirection.ToCharArray()[0];
-            moverInput.Direction = ParseCompassDirection(cc);
+                    string[] data = gridDimensionsAndStartingDirection.Split(' ');
+                    if (int.TryParse(data[0], out temp))
+                    {
+                        moverInput.X = temp;
+                    }
+                    else { throw new ArgumentException("Not an integer"); }
 
-            List<MowerCommand> mowerCommands = new List<MowerCommand>();
+                    if (int.TryParse(data[1], out temp))
+                    {
+                        moverInput.Y = temp;
+                    }
+                    else { throw new ArgumentException("Not an integer"); }
 
-            var chars = commands.ToCharArray();
-            foreach (char c in chars)
-            {
-                MowerCommand Commands = ParseMowerCommand(c);
-                mowerCommands.Add(Commands);
-            }
-            moverInput.Commands = mowerCommands;
+                string cdirection = data[2];
+                char cc;
+                cc = cdirection.ToCharArray()[0];
+                moverInput.Direction = ParseCompassDirection(cc);
 
-            return moverInput;
-        }
+                List<MowerCommand> mowerCommands = new List<MowerCommand>();
+
+                var chars = commands.ToCharArray();
+                foreach (char c in chars)
+                {
+                    MowerCommand Commands = ParseMowerCommand(c);
+                    mowerCommands.Add(Commands);
+                }
+                moverInput.Commands = mowerCommands;
+                return moverInput;
+         }
 
         private MowerCommand ParseMowerCommand(char command)
         {
@@ -76,7 +80,7 @@ namespace LawnMower
                 case 'R':
                     return MowerCommand.Right;
                 default:
-                    throw new NotImplementedException();
+                    throw new ArgumentException("Not a valid mover command");
             }
         }
 
