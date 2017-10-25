@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LawnDimension.cs" />
     <Compile Include="MowerEngine.cs" />
     <Compile Include="MowerInput.cs" />
     <Compile Include="Program.cs" />
@@ -67,7 +68,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ReadTextFile.txt" />
+    <Content Include="ReadTextFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
