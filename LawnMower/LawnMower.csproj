@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LawnDimension.cs" />
-    <Compile Include="MowerEngine.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="MowerInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

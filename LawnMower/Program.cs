@@ -7,12 +7,12 @@ using System.IO;
 
 namespace LawnMower
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             List<string> moverinput = new List<string>();
-           
+
             StreamReader sr = new StreamReader("C:\\Files\\Chandra.txt");
             string gridSize = sr.ReadLine();
             string input = sr.ReadLine();
@@ -23,30 +23,41 @@ namespace LawnMower
                 input = sr.ReadLine();
             }
             var girdsize = LawnDimension.gridDimension(gridSize);
-            Console.WriteLine($"GridCoordinates:({girdsize.GridX}, {girdsize.GridY})");
+
             if (moverinput.Count > 0)
             {
-                List<MowerInput> allParsedInputs = new List<MowerInput>();
+                List<MowerInput> mowers = new List<MowerInput>();
                 for (int i = 0; i < moverinput.Count; i++)
                 {
                     try
                     {
-                        var test = MowerInput.ParseMowerInput(moverinput[i], moverinput[i + 1]);
-                        allParsedInputs.Add(test);
+                        var eachMower = MowerInput.ParseMowerInput(moverinput[i], moverinput[i + 1]);
+                        mowers.Add(eachMower);
                     }
                     catch (ArgumentException e)
                     {
                         Console.WriteLine("Exception: " + e.Message);
-                        Console.ReadLine();
-                        Environment.Exit(-1);
+                        throw e;
+
                     }
 
                     i += 1;
                 }
 
-                foreach (var parsedInput in allParsedInputs)
+                Engine eng = new Engine(girdsize);
+                foreach (var mower in mowers)
                 {
-                    Console.WriteLine($"Coordinates:({parsedInput.X}, {parsedInput.Y}) Direction: {parsedInput.Direction} Commands: {parsedInput.Commands[0]} {parsedInput.Commands[1]} {parsedInput.Commands[2]} {parsedInput.Commands[3]}");
+                    try
+                    {
+                        eng.ProcessCommands(mower);
+
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("Exception: " + e.Message);
+                        throw e;
+
+                    }
                 }
                 Console.ReadLine();
             }
@@ -54,5 +65,6 @@ namespace LawnMower
             sr.Close();
             Console.ReadLine();
         }
+
     }
 }

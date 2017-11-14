@@ -13,8 +13,6 @@ namespace LawnMower
 
     public class MowerInput
     {
-        public int GridX { get; set; }
-        public int GridY { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public CompassDirection Direction { get; set; }
@@ -24,36 +22,36 @@ namespace LawnMower
         {
             MowerInput parsedMoverInput = new MowerInput();
             int temp;
-           
-                    string[] data = gridDimensionsAndStartingDirection.Split(' ');
-                    if (int.TryParse(data[0], out temp))
-                    {
-                       parsedMoverInput.X = temp;
-                    }
-                    else { throw new ArgumentException("Not an integer"); }
 
-                    if (int.TryParse(data[1], out temp))
-                    {
-                      parsedMoverInput.Y = temp;
-                    }
-                    else { throw new ArgumentException("Not an integer"); }
+            string[] data = gridDimensionsAndStartingDirection.Split(' ');
+            if (int.TryParse(data[0], out temp))
+            {
+                parsedMoverInput.X = temp;
+            }
+            else { throw new ArgumentException("Not an integer"); }
 
-                string cdirection = data[2];
-                char cc;
-                cc = cdirection.ToCharArray()[0];
-                 parsedMoverInput.Direction = ParseCompassDirection(cc);
+            if (int.TryParse(data[1], out temp))
+            {
+                parsedMoverInput.Y = temp;
+            }
+            else { throw new ArgumentException("Not an integer"); }
 
-                List<MowerCommand> mowerCommands = new List<MowerCommand>();
+            string cdirection = data[2];
+            char cc;
+            cc = cdirection.ToCharArray()[0];
+            parsedMoverInput.Direction = ParseCompassDirection(cc);
 
-                var chars = commands.ToCharArray();
-                foreach (char c in chars)
-                {
-                    MowerCommand Commands = ParseMowerCommand(c);
-                    mowerCommands.Add(Commands);
-                }
-                parsedMoverInput.Commands = mowerCommands;
-                return parsedMoverInput;
-         }
+            List<MowerCommand> mowerCommands = new List<MowerCommand>();
+
+            var chars = commands.ToCharArray();
+            foreach (char c in chars)
+            {
+                MowerCommand Commands = ParseMowerCommand(c);
+                mowerCommands.Add(Commands);
+            }
+            parsedMoverInput.Commands = mowerCommands;
+            return parsedMoverInput;
+        }
 
         private static MowerCommand ParseMowerCommand(char command)
         {
@@ -85,8 +83,9 @@ namespace LawnMower
                 default:
                     throw new ArgumentException("Not a valid direction");
             }
+
         }
 
     }
-       
+
 }

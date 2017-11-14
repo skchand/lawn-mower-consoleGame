@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 
 namespace LawnMower
 {
-    class LawnDimension
+    public class LawnDimension
     {
         public int GridX { get; set; }
         public int GridY { get; set; }
 
         public static LawnDimension gridDimension(string gridSize)
         {
-            LawnDimension lawnDimension = new LawnDimension();
+            LawnDimension girdSize = new LawnDimension();
             int temp;
             string[] gridcoordinates = gridSize.Split(' ');
 
 
             if (int.TryParse(gridcoordinates[0], out temp))
             {
-                lawnDimension.GridX = temp;
+                girdSize.GridX = temp;
             }
             else { throw new ArgumentException("Not an integer"); }
 
             if (int.TryParse(gridcoordinates[1], out temp))
             {
-                lawnDimension.GridY = temp;
+                girdSize.GridY = temp;
             }
             else { throw new ArgumentException("Not an integer"); }
 
-            return lawnDimension;
+            return girdSize;
         }
     }
 }
