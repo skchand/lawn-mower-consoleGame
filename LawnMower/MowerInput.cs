@@ -24,36 +24,49 @@ namespace LawnMower
             int temp;
 
             string[] data = gridDimensionsAndStartingDirection.Split(' ');
-            if (int.TryParse(data[0], out temp))
+            if (data != null)
             {
-                parsedMoverInput.X = temp;
-            }
-            else { throw new ArgumentException("Not an integer"); }
+                if (int.TryParse(data[0], out temp))
+                {
+                    parsedMoverInput.X = temp;
+                }
+                else { throw new ArgumentException("Not an integer"); }
 
-            if (int.TryParse(data[1], out temp))
-            {
-                parsedMoverInput.Y = temp;
-            }
-            else { throw new ArgumentException("Not an integer"); }
+                if (int.TryParse(data[1], out temp))
+                {
+                    parsedMoverInput.Y = temp;
+                }
+                else { throw new ArgumentException("Not an integer"); }
 
-            string cdirection = data[2];
-            char cc;
-            cc = cdirection.ToCharArray()[0];
-            parsedMoverInput.Direction = ParseCompassDirection(cc);
+                if (data[2] != null)
+                {
+                    string cdirection = data[2];
+                    char cc;
+                    cc = cdirection.ToCharArray()[0];
+                    parsedMoverInput.Direction = ParseCompassDirection(cc);
+                }
+                else { throw new System.ArgumentOutOfRangeException("index parameter is out of range"); }
+            }
+            else { throw new System.ArgumentException("Grid dimention cannot be null", "data"); }
 
             List<MowerCommand> mowerCommands = new List<MowerCommand>();
 
-            var chars = commands.ToCharArray();
-            foreach (char c in chars)
+            
+            if (commands != null)
             {
-                MowerCommand Commands = ParseMowerCommand(c);
-                mowerCommands.Add(Commands);
+                var chars = commands.ToCharArray();
+                foreach (char c in chars)
+                {
+                    MowerCommand Commands = ParseMowerCommand(c);
+                    mowerCommands.Add(Commands);
+                }
             }
+            else { throw new System.ArgumentException("Commands cannot be null", "data"); }
             parsedMoverInput.Commands = mowerCommands;
             return parsedMoverInput;
         }
 
-        private static MowerCommand ParseMowerCommand(char command)
+        internal static MowerCommand ParseMowerCommand(char command)
         {
             switch (command)
             {
@@ -68,7 +81,7 @@ namespace LawnMower
             }
         }
 
-        private static CompassDirection ParseCompassDirection(char directionAbbreviation)
+        internal static CompassDirection ParseCompassDirection(char directionAbbreviation)
         {
             switch (directionAbbreviation)
             {

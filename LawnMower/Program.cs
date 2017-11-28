@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 
 namespace LawnMower
 {
@@ -11,6 +12,7 @@ namespace LawnMower
     {
         static void Main(string[] args)
         {
+            ConsoleTitle();
             List<string> moverinput = new List<string>();
 
             StreamReader sr = new StreamReader("C:\\Files\\Chandra.txt");
@@ -65,6 +67,21 @@ namespace LawnMower
             sr.Close();
             Console.ReadLine();
         }
-
+        private static void ConsoleTitle()
+        {
+            string Progresbar = "This is Lawn Mower Console Game";
+            var title = "";
+          
+                for (int i = 0; i < Progresbar.Length; i++)
+                {
+                    title += Progresbar[i];
+                    Console.Title = title;
+                    Thread.Sleep(10);
+                }
+                title = "";
+            }
+        
     }
+   
+   
 }

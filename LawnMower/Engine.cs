@@ -20,21 +20,21 @@ namespace LawnMower
 
         internal void ProcessCommands(MowerInput mower)
         {
-            Console.WriteLine($"Initial Position: ({mower.X}, {mower.Y}) Direction:({mower.Direction}) ");
+            Console.WriteLine($"Initial Position: ({mower.X}, {mower.Y}) Direction:{mower.Direction}");
             ValidatePosition(mower);
             foreach (var command in mower.Commands)
             {
 
                 ProcessNextPosition(mower, command);
-                DrawFrame(mower);
+               
                 ValidatePosition(mower);
              
             }
-            Console.WriteLine($"New Position: ({mower.X}, {mower.Y}) Direction:({mower.Direction}) ");
-            Console.ReadLine();
+            Console.WriteLine($"New Position: ({mower.X}, {mower.Y}) Direction:{mower.Direction}");
+           
         }
 
-        private void ProcessNextPosition(MowerInput mower, MowerCommand command)
+        internal void ProcessNextPosition(MowerInput mower, MowerCommand command)
         {
             switch (mower.Direction)
             {
@@ -109,23 +109,17 @@ namespace LawnMower
             }
         }
 
-        private void ValidatePosition(MowerInput mower)
+        internal void ValidatePosition(MowerInput mower)
         {
             
-            if (mower.X <= 0 ||
-                mower.X >= gridX ||
-                mower.Y <= 0 ||
-                mower.Y >= gridY)
+            if (mower.X < 0 ||
+                mower.X > gridX ||
+                mower.Y < 0 ||
+                mower.Y > gridY)
             {
                 throw new ArgumentException("Invalid Coordinates");
             }
         }
 
-        private void DrawFrame(MowerInput mower)
-        {
-
-        }
-
-        //    return endPosition
     }
 }
