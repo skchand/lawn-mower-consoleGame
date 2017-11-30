@@ -46,13 +46,14 @@ namespace LawnMower
                     i += 1;
                 }
 
-                Engine eng = new Engine(girdsize);
+                Engine engine = new Engine(girdsize);
                 foreach (var mower in mowers)
                 {
                     try
                     {
-                        eng.ProcessCommands(mower);
-
+                        Console.WriteLine($"Initial Position: ({mower.X}, {mower.Y}) Direction:{mower.Direction}");
+                        var mowerOutput = engine.ProcessCommands(mower);
+                        Console.WriteLine($"New Position: ({mowerOutput.X}, {mowerOutput.Y}) Direction:{mowerOutput.Direction}");
                     }
                     catch (ArgumentException e)
                     {

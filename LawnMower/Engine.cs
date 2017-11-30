@@ -18,20 +18,20 @@ namespace LawnMower
             this.gridY = gridSize.GridY;
         }
 
-        internal void ProcessCommands(MowerInput mower)
+        internal MowerInput ProcessCommands(MowerInput mower)
         {
-            Console.WriteLine($"Initial Position: ({mower.X}, {mower.Y}) Direction:{mower.Direction}");
             ValidatePosition(mower);
+            ValidateCommands(mower);
             foreach (var command in mower.Commands)
             {
 
                 ProcessNextPosition(mower, command);
-               
+
                 ValidatePosition(mower);
-             
+
             }
-            Console.WriteLine($"New Position: ({mower.X}, {mower.Y}) Direction:{mower.Direction}");
-           
+
+            return mower;
         }
 
         internal void ProcessNextPosition(MowerInput mower, MowerCommand command)
@@ -111,15 +111,21 @@ namespace LawnMower
 
         internal void ValidatePosition(MowerInput mower)
         {
-            
+
             if (mower.X < 0 ||
                 mower.X > gridX ||
                 mower.Y < 0 ||
                 mower.Y > gridY)
             {
-                throw new ArgumentException("Invalid Coordinates");
+                throw new ArgumentException("Invalid Grid Coordinates");
             }
         }
-
+        internal void ValidateCommands(MowerInput mower)
+        {
+            if (mower.Commands == null || mower.Commands.Count == 0)
+            {
+                throw new ArgumentNullException("Commands set to null");
+            }
+        }
     }
 }
