@@ -3,53 +3,86 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Threading;
 
 namespace LawnMower
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            MowerInput mi = new MowerInput();
-            //string[] coordinates1;
-            string gridSize = Console.ReadLine();
-            //Console.WriteLine("Grid Size " + gridSize);
-            //string[] coordinates = gridSize.Split(' ');
-            //int x, y;
-            //Int32.TryParse(coordinates[0], out x);
-            //Int32.TryParse(coordinates[1], out y);
-            //Console.WriteLine("x-axis " + x);
-            //Console.WriteLine("y-axis " + y);
-
+            ConsoleTitle();
             List<string> moverinput = new List<string>();
 
-            string input = Console.ReadLine();
+            StreamReader sr = new StreamReader("C:\\Files\\Chandra.txt");
+            string gridSize = sr.ReadLine();
+            string input = sr.ReadLine();
 
             while (!string.IsNullOrEmpty(input))
             {
                 moverinput.Add(input);
-                input = Console.ReadLine();
+                input = sr.ReadLine();
             }
-           
+            var girdsize = LawnDimension.gridDimension(gridSize);
 
             if (moverinput.Count > 0)
             {
-                List<MowerInput> allParsedInputs = new List<MowerInput>();
+                List<MowerInput> mowers = new List<MowerInput>();
                 for (int i = 0; i < moverinput.Count; i++)
                 {
-                    var test = mi.ParseMowerInput(moverinput[i], moverinput[i + 1], gridSize);
-                    allParsedInputs.Add(test);
+                    try
+                    {
+                        var eachMower = MowerInput.ParseMowerInput(moverinput[i], moverinput[i + 1]);
+                        mowers.Add(eachMower);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("Exception: " + e.Message);
+                        throw e;
+
+                    }
+
                     i += 1;
                 }
-                //allParsedInputs
 
-                foreach (var parsedInput in allParsedInputs)
+                Engine engine = new Engine(girdsize);
+                foreach (var mower in mowers)
                 {
-                    Console.WriteLine($"GridCoordinates:({parsedInput.GridX}, {parsedInput.GridY}) Coordinates:({parsedInput.X}, {parsedInput.Y}) Direction: {parsedInput.Direction} Commands: {parsedInput.Commands[0]} {parsedInput.Commands[1]} {parsedInput.Commands[2]} {parsedInput.Commands[3]}");
+                    try
+                    {
+                        Console.WriteLine($"Initial Position: ({mower.X}, {mower.Y}) Direction:{mower.Direction}");
+                        var mowerOutput = engine.ProcessCommands(mower);
+                        Console.WriteLine($"New Position: ({mowerOutput.X}, {mowerOutput.Y}) Direction:{mowerOutput.Direction}");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("Exception: " + e.Message);
+                        throw e;
 
+                    }
                 }
                 Console.ReadLine();
             }
+            else { throw new ArgumentException("No input line detected"); }
+            sr.Close();
+            Console.ReadLine();
         }
+        private static void ConsoleTitle()
+        {
+            string Progresbar = "This is Lawn Mower Console Game";
+            var title = "";
+          
+                for (int i = 0; i < Progresbar.Length; i++)
+                {
+                    title += Progresbar[i];
+                    Console.Title = title;
+                    Thread.Sleep(10);
+                }
+                title = "";
+            }
+        
     }
+   
+   
 }
